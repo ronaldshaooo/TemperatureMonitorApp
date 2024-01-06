@@ -1,0 +1,18 @@
+body {
+    background-color:beige;
+}
+
+.h1text{
+    
+    color:  darkgreen; 
+    font-family: georgia; 
+    font-size: 200 px; 
+    border-style: solid;
+
+}
+
+.h2text{
+    color: darkgoldenrod; 
+    font-family:Verdana, Geneva, Tahoma, sans-serif; 
+    border-style: dashed; 
+}

@@ -1,0 +1,73 @@
+/* Define your color palette in :root */
+:root {
+  --main-bg-color: #478BA2;
+  --accent-color-1: #DE5B6D;
+  --accent-color-2: #E9765B;
+  --accent-color-3: #F2A490;
+  --accent-color-4: #B9D4DB;
+}
+
+#wholeDiv {
+  display: flex;
+  /* border: 3px outset var(--main-bg-color);  */
+  
+  background-color: white; 
+  height: 450px;
+  width: 850px;
+  margin: 0 auto;
+  justify-content: center;
+  border-radius: 10px;
+}
+
+#leftDiv {
+  margin: 20px;
+  border: 1px solid var(--accent-color-2);
+  width: 200px;
+  padding: 10px;
+  border-radius: 10px;
+  overflow-y: scroll;
+}
+
+#rightDiv {
+  margin: 20px;
+  border: 1px solid var(--accent-color-2);
+  flex: 1;
+  padding: 10px;
+  border-radius: 10px;
+  overflow-y: scroll;
+}
+
+.button {
+  width: fit-content;
+  background-color: var(--main-bg-color);
+  color: white;
+  padding: 8px 16px;
+  border: 2px outset var(--main-bg-color); 
+  border-radius: 4px;
+  text-align: center;
+}
+
+.button:hover {
+  background-color: var(--accent-color-4);
+}
+
+h1 {
+  font-family: "Open Sans", sans-serif;
+  color: var(--accent-color-3); 
+}
+
+.par{
+  font-family: "Open Sans", sans-serif;
+  color: var(--main-bg-color);
+  font-weight: bold; /* Make the text bold */
+  text-decoration: underline;
+}
+
+body {
+  background-image: url("background.png");
+  margin: 0;
+  padding: 0;
+  font-family: "Open Sans", sans-serif;
+  
+}
+
