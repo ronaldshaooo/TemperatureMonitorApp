@@ -9,6 +9,9 @@ While one person humorously referred to this project as 'dumb Slack,' the aspira
 - Elevate the chat room experience by adding features such as file sharing.
 - Enhance server performance and scalability to gracefully handle a substantial influx of concurrent connections.
 - Expand the reach of the project by developing client applications for diverse platforms.
+## Demo
+![Chat Web Client Demo](demo/WebDemo.gif)
+![Chat Android Demo](demo/ChatDemo.gif)
 ## Try Me Out!
 
 ### Version History
