@@ -1,4 +1,4 @@
-/* Define your color palette in :root */
+/* Color palette defined in :root */
 :root {
   --main-bg-color: #478BA2;
   --accent-color-1: #DE5B6D;
@@ -9,8 +9,6 @@
 
 #wholeDiv {
   display: flex;
-  /* border: 3px outset var(--main-bg-color);  */
-
   background-color: white;
   height: 450px;
   width: 850px;
@@ -23,9 +21,10 @@
   margin: 20px;
   border: 1px solid var(--accent-color-2);
   width: 200px;
-  padding: 10px;
+  padding: 0px;
   border-radius: 10px;
   overflow-y: scroll;
+  overflow: hidden;
 }
 
 #rightDiv {
@@ -35,25 +34,33 @@
   padding: 10px;
   border-radius: 10px;
   overflow-y: scroll;
+  overflow-x: none;
+  overflow: hidden; 
 }
 
 .button {
-  width: fit-content;
+  display: inline-block; 
   background-color: var(--main-bg-color);
   color: white;
   padding: 8px 16px;
   border: 2px outset var(--main-bg-color);
   border-radius: 4px;
   text-align: center;
+  font-size: .9rem; 
+  transition: all 0.2 ease; 
+  text-decoration: none; 
+  margin: 8px; 
 }
 
 .button:hover {
   background-color: var(--accent-color-4);
+  cursor: pointer;
 }
 
 h1 {
   font-family: "Open Sans", sans-serif;
-  color: var(--accent-color-3);
+  color: var(--accent-color-1);
+  font-size: 2rem; 
 }
 
 .par{
@@ -71,11 +78,52 @@ body {
 
 }
 
+label{
+  font-size: 1rem; 
+}
+
 .timestamp {
   font-weight: bold;
   color: #888; /* Change the color to your preference */
   margin-right: 5px; /* Adjust the spacing as needed */
 }
+
+#ChatRoom:focus {
+  outline: none; 
+}
+
+#UserName:focus {
+  outline: none;
+}
+
+#Message:focus {
+  outline: none;
+}
+
+#UserName {
+  width: 15%; 
+  font-size: .9rem; 
+  padding: 8px 14px; 
+  border: none; 
+  border-radius: 5px;
+}  
+
+#ChatRoom {
+  width: 20%; 
+  font-size: .9rem; 
+  padding: 8px 14px; 
+  border: none; 
+  border-radius: 5px;
+}   
+
+#Message {
+  width: 20%; 
+  font-size: .9rem; 
+  padding: 8px 14px; 
+  border: none; 
+  border-radius: 5px;
+}   
+
 
 
 

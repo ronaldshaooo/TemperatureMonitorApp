@@ -2,41 +2,41 @@
 
 //---adding all the html tags/items as variables---//
 
-//stores all of the html buttons as variables
+//store html buttons as variables
 let enterChatBtn=document.getElementById("enterChatBtn");
 let messSendBtn=document.getElementById("sendBtn");
 let leaveBtn=document.getElementById("leaveRoomBtn");
 
-//stores all of the text boxes as variables
+//store text boxes as variables
 let nameTxt=document.getElementById("UserName");
 let roomTxt=document.getElementById("ChatRoom");
 let messageTxt=document.getElementById("Message");
 
-//stores the divs as variables
+//store divs as variables
 let leftDiv=document.getElementById("leftDiv");
 let rightDiv=document.getElementById("rightDiv");
 
-//---adding event listeners to all text boxes and buttons---//
+//---add event listeners to text boxes/buttons---//
 
-//handle entering keyboard/mouse click events when entering the chat room
+//keyboard/mouse click events when entering chatroom
 enterChatBtn.addEventListener("click", handleEnterChat);
 nameTxt.addEventListener("keypress", handleEnterChat);
 roomTxt.addEventListener("keypress", handleEnterChat);
 
-//handle keyboard/mouse click events when sending a message
+//keyboard/mouse click events when sending message
 messSendBtn.addEventListener("click", handleSendMessage);
 messageTxt.addEventListener("keypress", handleSendMessage);
 
-//handle keyboard/mouse click events for leaving the chatroom
+//keyboard/mouse click events for leaving chatroom
 leaveBtn.addEventListener("click", handleleaveChat);
 
 
-//---creating the socket, global variables---//
+//---create the socket, global variables---//
 let wsOpen=false;
 let inChatRoom = false;
 let ws = new WebSocket('ws://localhost:8080');
 
-//---handling the websocket---//
+//---handle the websocket---//
 ws.onopen=handleOpenCB;
 ws.onmessage = function(e) {
     handleMsgCB(e);
@@ -48,15 +48,14 @@ ws.onerror=handleErrorCB;
 function handleOpenCB(){
     wsOpen=true;
     console.log("Websocket Connection Opened");
-    // alert("Websocket Connection Opened");
 }
 
 function handleMsgCB(e){
     let msgObj = JSON.parse(e.data);
-    let type=msgObj.type;
+    let type = msgObj.type;
     let room = msgObj.room;
     let user = msgObj.user;
-    let message=msgObj.message;
+    let message = msgObj.message;
 
     let lineBreak = document.createElement("br");
 
@@ -72,11 +71,9 @@ function handleMsgCB(e){
 
         let outText=document.createTextNode(user + ": " + message);
 
-
         rightDiv.appendChild(lineBreak);
         rightDiv.appendChild(timeText);
         rightDiv.appendChild(outText);
-
     }
 
     if (type === "join"){
@@ -95,7 +92,7 @@ function handleMsgCB(e){
     if (type === "leave"){
         let outText = document.createTextNode(user + " left " + room + ".");
 
-        // Remove the element with the specified id
+        // Remove the element by specified id
         const chatParticipant = document.getElementById(user);
         if (chatParticipant) {
             chatParticipant.parentNode.removeChild(chatParticipant);
@@ -105,19 +102,16 @@ function handleMsgCB(e){
         rightDiv.appendChild(outText);
     }
 }
+
 function handleCloseCB(){
     wsOpen=false;
     console.log("Websocket Connection Closed");
     alert("Websocket Connection Closed");
 }
 
-//Display the error? What kind of error messages will we be getting?
+//display any error messages
 function handleErrorCB(errorMessage){
-
     console.error("Server error: " + errorMessage);
-
-    //alert("Server error: " + errorMessage);
-
 }
 
 function handleEnterChat (event){

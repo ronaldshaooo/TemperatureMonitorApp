@@ -96,7 +96,7 @@ function handleCloseCB(){
     console.log("Websocket Connection Opened"); 
 }
 
-//Display the error? What kind of error messages will we be getting? 
+//Handle error message
 function handleErrorCB(errorMessage){
 
     console.error("Server error: " + errorMessage);
