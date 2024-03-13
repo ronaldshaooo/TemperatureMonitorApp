@@ -3,14 +3,7 @@
 //---adding all the html tags/items as variables---//
 
 //store html buttons as variables
-let enterChatBtn=document.getElementById("enterChatBtn");
-let messSendBtn=document.getElementById("sendBtn");
-let leaveBtn=document.getElementById("leaveRoomBtn");
-
-//store text boxes as variables
-let nameTxt=document.getElementById("UserName");
-let roomTxt=document.getElementById("ChatRoom");
-let messageTxt=document.getElementById("Message");
+let startBtn=document.getElementById("startBtn");
 
 //store divs as variables
 let leftDiv=document.getElementById("leftDiv");
@@ -19,16 +12,7 @@ let rightDiv=document.getElementById("rightDiv");
 //---add event listeners to text boxes/buttons---//
 
 //keyboard/mouse click events when entering chatroom
-enterChatBtn.addEventListener("click", handleEnterChat);
-nameTxt.addEventListener("keypress", handleEnterChat);
-roomTxt.addEventListener("keypress", handleEnterChat);
-
-//keyboard/mouse click events when sending message
-messSendBtn.addEventListener("click", handleSendMessage);
-messageTxt.addEventListener("keypress", handleSendMessage);
-
-//keyboard/mouse click events for leaving chatroom
-leaveBtn.addEventListener("click", handleleaveChat);
+startBtn.addEventListener("click", handleEnterChat);
 
 
 //---create the socket, global variables---//
@@ -139,43 +123,11 @@ function handleEnterChat (event){
 }
 
 function getName(){
-    return nameTxt.value.toLowerCase();
+    return "TestPhone";
 }
 
 function getRoom(){
-    return roomTxt.value.toLowerCase();
-}
-
-function handleSendMessage(event){
-
-    if (event.key === "Enter" || event.type === "click"){
-        let message=messageTxt.value;
-
-        console.log("message is: "+ message);
-
-        if(message!==""){
-            ws.send("message:" + getName() + ":" + getRoom() + ":" + message);
-            messageTxt.value = "";
-        }
-        else{
-            alert("Entry is null, please try again");
-            return;
-        }
-    }
-}
-
-function handleleaveChat(event){
-
-    console.log("leave button pressed");
-    if (event.type==="click"){
-
-        document.getElementById("leftDiv").innerHTML = "";
-        document.getElementById("rightDiv").innerHTML = "";
-
-        inChatRoom=false;
-
-        ws.send("leave:" + getName() + ":" + getRoom());
-    }
+    return "TestChannel";
 }
 
 function getCurrentTimestamp() {
