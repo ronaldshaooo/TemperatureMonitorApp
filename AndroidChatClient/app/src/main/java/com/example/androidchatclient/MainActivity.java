@@ -24,9 +24,8 @@ import java.io.IOException;
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
 
     final String MsTag = "MainActivity:Cj";
-    public EditText username;
-    public EditText room;
-    public TextView error;
+    public TextView proximityText;
+    public TextView lightText;
 
     public static final String roomNameKey = "roomNameKey";  // Key for passing room name between activities
     public static final String userNameKey="userNameKey";   // Key for passing username between activities
@@ -46,9 +45,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         setContentView(R.layout.activity_main);
 
         // Initialize and link the username, room, and error views from the XML layout
-        username = findViewById(R.id.usernameFld);
-        room = findViewById(R.id.roomFld);
-        error = findViewById(R.id.error);
+        proximityText = findViewById(R.id.proximityText);
+        lightText = findViewById(R.id.lightText);
 
         mSensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
         mProximity = mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
@@ -60,25 +58,25 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         Log.d(MsTag, "Button was pressed...");
 
         // Get the user input from the EditText fields
-        String userCheck = String.valueOf(username.getText());
-        String roomCheck = String.valueOf(room.getText());
+        String userCheck = "TestPhone";
+        String channelCheck = "TestChannel";
 
 
         // Check if both the username and chat room have at least one letter
         boolean userHasLtrs = userCheck.matches(".*[a-zA-Z].*");
-        boolean roomHasLtrs = roomCheck.matches(".*[a-zA-Z].*");
+        boolean roomHasLtrs = channelCheck.matches(".*[a-zA-Z].*");
 
         if (userHasLtrs && roomHasLtrs) {
             // Create an intent to switch to the ChatRoomPage activity
             Intent intent = new Intent(this, ChatRoomPage.class);
             // Pass the room name and username as extras to the ChatRoomPage activity
             intent.putExtra(userNameKey, userCheck);
-            intent.putExtra(roomNameKey, roomCheck);
+            intent.putExtra(roomNameKey, channelCheck);
             // Start the ChatRoomPage activity
             startActivity(intent);
         } else {
             // Display an error message if either the username or chat room text is empty
-            error.setText("Username and chat room are required fields.");
+//            error.setText("Username and chat room are required fields.");
         }
     }
 
@@ -97,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     @Override
     public void onSensorChanged(SensorEvent event) {
         if (event.sensor.getType() == Sensor.TYPE_PROXIMITY) {
-            error.setText(String.valueOf(event.values[0]));
+            proximityText.setText(String.valueOf(event.values[0]));
             if (event.values[0] >= -SENSOR_SENSITIVITY && event.values[0] <= SENSOR_SENSITIVITY) {
                 //near
                 Toast.makeText(getApplicationContext(), "near", Toast.LENGTH_SHORT).show();
@@ -108,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         }
 
         if (event.sensor.getType() == Sensor.TYPE_LIGHT) {
-            error.setText(String.valueOf(event.values[0]));
+            lightText.setText(String.valueOf(event.values[0]));
 
         }
     }

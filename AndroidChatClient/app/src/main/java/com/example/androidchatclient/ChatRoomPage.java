@@ -34,7 +34,6 @@ public class ChatRoomPage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chat_room_page);
 
         Bundle extras=getIntent().getExtras();
 
@@ -47,11 +46,7 @@ public class ChatRoomPage extends AppCompatActivity {
         }
 
         // Getting references to various UI elements
-        roomName = findViewById(R.id.RmName);
-        sendBtn = findViewById(R.id.sendBtn);
-        messageFld = findViewById(R.id.msgFld);
-        messageContainer = findViewById(R.id.messageContainer);
-        userContainer = findViewById(R.id.usersFld);
+
 
         // Set the room name
         roomName.setText(room);
