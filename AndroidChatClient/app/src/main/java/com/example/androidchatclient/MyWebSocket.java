@@ -35,6 +35,8 @@ public class MyWebSocket extends WebSocketAdapter {
 
         // Send a 'join' message to the server with username and room name
         websocket.sendText( "join:" + chatRoomPage.getUsername() + ":" + chatRoomPage.getRoom());
+        websocket.sendText( "message:" + chatRoomPage.getUsername() + ":" + chatRoomPage.getRoom()+ ":" + "!!!");
+        //        websocket.sendText( "message:" + chatRoomPage.getUsername() + ":" + chatRoomPage.getRoom() + ":" + "~~~");
     }
 
     @Override
@@ -55,18 +57,15 @@ public class MyWebSocket extends WebSocketAdapter {
         Log.d(MsTag, "Room: " + room + "------------------");
 
         if(type.equals("message")){
-            // Handle incoming chat messages
-            String message = jsonObject.getString("message");
-            Log.d(MsTag, "Message: " + message + "------------------");
-            chatRoomPage.displayMessage(user, message);
+
         }
         if (type.equals("join")){
             // Handle a user joining the chat
-            chatRoomPage.displayJoin(user);
+//            chatRoomPage.displayJoin(user);
         }
         if (type.equals("leave")){
             // Handle a user leaving the chat
-            chatRoomPage.handleLeave(user);
+//            chatRoomPage.handleLeave(user);
         }
     }
     @Override

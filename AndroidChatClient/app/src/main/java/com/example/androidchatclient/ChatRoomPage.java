@@ -3,6 +3,10 @@ package com.example.androidchatclient;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,15 +14,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.neovisionaries.ws.client.WebSocket;
 import com.neovisionaries.ws.client.WebSocketFactory;
 
 import java.io.IOException;
 
-public class ChatRoomPage extends AppCompatActivity {
+public class ChatRoomPage extends AppCompatActivity  implements SensorEventListener {
     private final String MsTag = "ChatRoomPage:Cj"; // Log tag for debugging
-    private String username;
-    private String room;
+    private String username = "TestPhone";
+    private String room = "TestChannel";
 
     // UI elements
     private TextView roomName;
@@ -31,31 +37,28 @@ public class ChatRoomPage extends AppCompatActivity {
     private static final String WS_URL = "ws://10.0.2.2:8080/endpoint";
     private WebSocket ws = null;
 
+    public TextView proximityText;
+    public TextView lightText;
+    private SensorManager mSensorManager;
+    private Sensor mProximity;
+    private Sensor mLight;
+    private static final int SENSOR_SENSITIVITY = 4;
+    private final static String NOT_SUPPORTED_MESSAGE = "Sorry, sensor not available for this device.";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Bundle extras=getIntent().getExtras();
+        setContentView(R.layout.activity_main);
 
-        if (extras!=null) {
-            //Grabbing extras sent from previous page
-            // Retrieve the username
-            username = extras.getString(MainActivity.userNameKey);
-            // Retrieve the chat room name
-            room = extras.getString(MainActivity.roomNameKey);
-        }
+        // Initialize and link the username, room, and error views from the XML layout
+        proximityText = findViewById(R.id.proximityText);
+        lightText = findViewById(R.id.lightText);
 
-        // Getting references to various UI elements
-
-
-        // Set the room name
-        roomName.setText(room);
-
-        // Add "Users:" label to the user container
-        TextView userText = new TextView(this);
-        userText.setPadding(50,10,10,10);
-        userText.setText("Users: ");
-        userContainer.addView(userText);
+        mSensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
+        mProximity = mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
+        mLight = mSensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
 
 
         try {
@@ -79,12 +82,6 @@ public class ChatRoomPage extends AppCompatActivity {
             // Clear the message input field after sending
             messageFld.setText("");
         }
-    }
-
-    public void handleLeave (View view){
-        ws.sendText( "leave:" + username + ":" + room);
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
     }
 
     public String getUsername(){
@@ -111,38 +108,45 @@ public class ChatRoomPage extends AppCompatActivity {
             }
         });
     }
-        public void displayJoin(final String username) {
-            // Display a user joining the chat
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    String user=username;
-                    TextView addedUser = new TextView(ChatRoomPage.this);
-                    addedUser.setPadding(50,10,10,10);
-                    addedUser.setText(user);
-                    userContainer.addView(addedUser);
-                }
-            });
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mSensorManager.registerListener(this, mProximity, SensorManager.SENSOR_DELAY_NORMAL);
+        mSensorManager.registerListener(this, mLight, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
-    public void handleLeave(final String username) {
-        // Handle a user leaving the chat
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                // Find and remove the view with the username from userContainer
-                for (int i = 0; i < userContainer.getChildCount(); i++) {
-                    View child = userContainer.getChildAt(i);
-                    if (child instanceof TextView) {
-                        TextView textView = (TextView) child;
-                        if (textView.getText().toString().equals(username)) {
-                            userContainer.removeView(textView);
-                            break; // Exit the loop once the user is removed
-                        }
-                    }
-                }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mSensorManager.unregisterListener(this);
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        ws.sendText( "message:" + username + ":" + room + ":" + "~~~~");
+        if (event.sensor.getType() == Sensor.TYPE_PROXIMITY) {
+            proximityText.setText(String.valueOf(event.values[0]));
+            if (event.values[0] >= -SENSOR_SENSITIVITY && event.values[0] <= SENSOR_SENSITIVITY) {
+                //near
+                Toast.makeText(getApplicationContext(), "near", Toast.LENGTH_SHORT).show();
+                ws.sendText( "message:" + username + ":" + room + ":" + "近");
+            } else {
+                //far
+                Toast.makeText(getApplicationContext(), "far", Toast.LENGTH_SHORT).show();
+                ws.sendText( "message:" + username + ":" + room + ":" + "遠");
             }
-        });
+        }
+
+        if (event.sensor.getType() == Sensor.TYPE_LIGHT) {
+            lightText.setText(String.valueOf(event.values[0]));
+            ws.sendText( "message:" + username + ":" + room + ":" + String.valueOf(event.values[0]));
+        }
     }
 
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+    }
 }
+

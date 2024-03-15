@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -16,8 +17,10 @@ public class Main {
         //The RoomManager, which manages the rooms, is owned by Main
         RoomManager roomManager=new RoomManager();
 
+        InetAddress addr = InetAddress.getByName("127.0.0.1");
+
         // Create the ServerSocket that waits for a client request at a certain port (8080)
-        ServerSocket server = new ServerSocket(8080);
+        ServerSocket server = new ServerSocket(8080, 1024, addr);
 
         // Continuously wait for client connections
         while (true) {

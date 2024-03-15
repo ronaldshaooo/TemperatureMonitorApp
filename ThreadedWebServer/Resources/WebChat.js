@@ -6,8 +6,8 @@
 let startBtn=document.getElementById("startBtn");
 
 //store divs as variables
-let leftDiv=document.getElementById("leftDiv");
-let rightDiv=document.getElementById("rightDiv");
+let leftDiv=document.getElementById("proximityText");
+let rightDiv=document.getElementById("lightText");
 
 //---add event listeners to text boxes/buttons---//
 
@@ -47,30 +47,13 @@ function handleMsgCB(e){
     console.log("message type: " + type);
 
     if(type==="message"){
-        const timestamp=getCurrentTimestamp();
 
-        let timeText = document.createElement('span');
-        timeText.textContent = `[${timestamp}] `;
-        timeText.classList.add('timestamp');
-
-        let outText=document.createTextNode(user + ": " + message);
-
-        rightDiv.appendChild(lineBreak);
-        rightDiv.appendChild(timeText);
-        rightDiv.appendChild(outText);
+        document.getElementById('proximityText').innerHTML = message;
     }
 
     if (type === "join"){
-        let chatParticipants = document.createElement("p");
-        chatParticipants.textContent = user;
-        chatParticipants.id = user;
 
-        let outText = document.createTextNode(user + " joined " + room);
-
-        leftDiv.appendChild(lineBreak);
-        leftDiv.appendChild(chatParticipants);
-        rightDiv.appendChild(lineBreak);
-        rightDiv.appendChild(outText);
+        document.getElementById('lightText').innerHTML = user + " joined " + room;
     }
 
     if (type === "leave"){

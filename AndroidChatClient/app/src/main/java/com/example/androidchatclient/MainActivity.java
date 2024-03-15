@@ -21,36 +21,16 @@ import com.neovisionaries.ws.client.WebSocketFactory;
 
 import java.io.IOException;
 
-public class MainActivity extends AppCompatActivity implements SensorEventListener {
-
-    final String MsTag = "MainActivity:Cj";
-    public TextView proximityText;
-    public TextView lightText;
-
+public class MainActivity extends AppCompatActivity {
     public static final String roomNameKey = "roomNameKey";  // Key for passing room name between activities
     public static final String userNameKey="userNameKey";   // Key for passing username between activities
 
-    private SensorManager mSensorManager;
-    private Sensor mProximity;
-    private Sensor mLight;
-    private static final int SENSOR_SENSITIVITY = 4;
-    private final static String NOT_SUPPORTED_MESSAGE = "Sorry, sensor not available for this device.";
-
-
-
+    final String MsTag = "MainActivity:Cj";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        // Initialize and link the username, room, and error views from the XML layout
-        proximityText = findViewById(R.id.proximityText);
-        lightText = findViewById(R.id.lightText);
-
-        mSensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
-        mProximity = mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
-        mLight = mSensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
     }
 
     public void handleLogin(View view) {
@@ -80,39 +60,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        mSensorManager.registerListener(this, mProximity, SensorManager.SENSOR_DELAY_NORMAL);
-    }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        mSensorManager.unregisterListener(this);
-    }
-
-    @Override
-    public void onSensorChanged(SensorEvent event) {
-        if (event.sensor.getType() == Sensor.TYPE_PROXIMITY) {
-            proximityText.setText(String.valueOf(event.values[0]));
-            if (event.values[0] >= -SENSOR_SENSITIVITY && event.values[0] <= SENSOR_SENSITIVITY) {
-                //near
-                Toast.makeText(getApplicationContext(), "near", Toast.LENGTH_SHORT).show();
-            } else {
-                //far
-                Toast.makeText(getApplicationContext(), "far", Toast.LENGTH_SHORT).show();
-            }
-        }
-
-        if (event.sensor.getType() == Sensor.TYPE_LIGHT) {
-            lightText.setText(String.valueOf(event.values[0]));
-
-        }
-    }
-
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
-    }
 }
+
