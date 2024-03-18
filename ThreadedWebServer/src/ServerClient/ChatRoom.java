@@ -15,16 +15,16 @@ public class ChatRoom {
                 client.encodeMessage(message);
         }
     }
-    public synchronized void addClient(MyRunnable runnable) {
+    public synchronized void addClient(MyRunnable runnable, String msg) {
 
         for(MyRunnable client : clientArr){
             //this is returning the incorrect room name and username
             String name =client.getUsername_();
-            runnable.encodeMessage(MyRunnable.makeJoinMsg(client.getRoomName_(), client.getUsername_()));
+            runnable.encodeMessage(MyRunnable.makeJoinMsg(client.getRoomName_(), client.getUsername_(), msg));
         }
         clientArr.add(runnable);
 
-        helperSend(MyRunnable.makeJoinMsg(runnable.getRoomName_(), runnable.getUsername_()));
+        helperSend(MyRunnable.makeJoinMsg(runnable.getRoomName_(), runnable.getUsername_(), msg));
 
     }
 

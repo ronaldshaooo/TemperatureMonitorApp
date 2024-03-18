@@ -39,34 +39,19 @@ function handleMsgCB(e){
     let type = msgObj.type;
     let room = msgObj.room;
     let user = msgObj.user;
-    let message = msgObj.message;
 
-    let lineBreak = document.createElement("br");
-
-    console.log("message object: " + msgObj);
     console.log("message type: " + type);
 
     if(type==="message"){
-
+        let message = msgObj.message;
+        console.log("message object: " + msgObj);
         document.getElementById('proximityText').innerHTML = message;
     }
 
     if (type === "join"){
-
-        document.getElementById('lightText').innerHTML = user + " joined " + room;
-    }
-
-    if (type === "leave"){
-        let outText = document.createTextNode(user + " left " + room + ".");
-
-        // Remove the element by specified id
-        const chatParticipant = document.getElementById(user);
-        if (chatParticipant) {
-            chatParticipant.parentNode.removeChild(chatParticipant);
-        }
-
-        rightDiv.appendChild(lineBreak);
-        rightDiv.appendChild(outText);
+        let message = msgObj.message;
+        console.log("message object: " + msgObj);
+        document.getElementById('lightText').innerHTML = message;
     }
 }
 
@@ -89,7 +74,7 @@ function handleEnterChat (event){
         console.log("room is: " + getRoom());
 
         if(getName()!=="" && getRoom()!=="" && !inChatRoom){
-            ws.send("join:" + getName() + ":" + getRoom());
+            ws.send("join:" + getName() + ":" + getRoom() + ":~");
             inChatRoom = true;
         }
 

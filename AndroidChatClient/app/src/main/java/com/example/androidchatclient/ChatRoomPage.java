@@ -34,7 +34,7 @@ public class ChatRoomPage extends AppCompatActivity  implements SensorEventListe
     private LinearLayout messageContainer;
     private LinearLayout userContainer;
     //WebSocket server URL
-    private static final String WS_URL = "ws://10.0.2.2:8080/endpoint";
+    private static final String WS_URL = "ws://192.168.227.172:8080/endpoint";
     private WebSocket ws = null;
 
     public TextView proximityText;
@@ -124,7 +124,7 @@ public class ChatRoomPage extends AppCompatActivity  implements SensorEventListe
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-        ws.sendText( "message:" + username + ":" + room + ":" + "~~~~");
+//        ws.sendText( "message:" + username + ":" + room + ":" + "~~~~");
         if (event.sensor.getType() == Sensor.TYPE_PROXIMITY) {
             proximityText.setText(String.valueOf(event.values[0]));
             if (event.values[0] >= -SENSOR_SENSITIVITY && event.values[0] <= SENSOR_SENSITIVITY) {
@@ -140,7 +140,7 @@ public class ChatRoomPage extends AppCompatActivity  implements SensorEventListe
 
         if (event.sensor.getType() == Sensor.TYPE_LIGHT) {
             lightText.setText(String.valueOf(event.values[0]));
-            ws.sendText( "message:" + username + ":" + room + ":" + String.valueOf(event.values[0]));
+            ws.sendText( "join:" + username + ":" + room + ":" + String.valueOf(event.values[0]));
         }
     }
 

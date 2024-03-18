@@ -34,7 +34,7 @@ public class MyWebSocket extends WebSocketAdapter {
         Log.d(MsTag, "Websocket is connected");
 
         // Send a 'join' message to the server with username and room name
-        websocket.sendText( "join:" + chatRoomPage.getUsername() + ":" + chatRoomPage.getRoom());
+//        websocket.sendText( "join:" + chatRoomPage.getUsername() + ":" + chatRoomPage.getRoom());
         websocket.sendText( "message:" + chatRoomPage.getUsername() + ":" + chatRoomPage.getRoom()+ ":" + "!!!");
         //        websocket.sendText( "message:" + chatRoomPage.getUsername() + ":" + chatRoomPage.getRoom() + ":" + "~~~");
     }

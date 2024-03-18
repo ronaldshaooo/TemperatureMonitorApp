@@ -17,16 +17,16 @@ public class RoomManager {
         return null;
     }
 
-    public void joinRoom(MyRunnable runnable) {
+    public void joinRoom(String msg, MyRunnable runnable) {
 
         ChatRoom room = findRoom(runnable.getRoomName_());
 
         if (room != null) {
-            room.addClient(runnable);
+            room.addClient(runnable, msg);
         } else {
             ChatRoom newChatRoom = new ChatRoom(runnable.getRoomName_());
             chatRmArr.add(newChatRoom);
-            newChatRoom.addClient(runnable);
+            newChatRoom.addClient(runnable, msg);
         }
     }
 

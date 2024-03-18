@@ -1,26 +1,18 @@
 import java.io.IOException;
-import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
 
-import ServerClient.ChatRoom;
 import ServerClient.MyRunnable;
 import ServerClient.RoomManager;
 
 public class Main {
     public static void main(String[] args) throws IOException {
 
-        // Create an ArrayList to store MyRunnable objects
-        ArrayList<MyRunnable> runnArr = new ArrayList<>();
-
         //The RoomManager, which manages the rooms, is owned by Main
         RoomManager roomManager=new RoomManager();
 
-        InetAddress addr = InetAddress.getByName("127.0.0.1");
-
         // Create the ServerSocket that waits for a client request at a certain port (8080)
-        ServerSocket server = new ServerSocket(8080, 1024, addr);
+        ServerSocket server = new ServerSocket(8080);
 
         // Continuously wait for client connections
         while (true) {

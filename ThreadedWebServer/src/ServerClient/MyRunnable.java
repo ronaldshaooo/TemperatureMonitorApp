@@ -94,7 +94,8 @@ public class MyRunnable implements Runnable {
         username_=messArr[1];
         roomName_=messArr[2];
        if(cmd_.equals("join")){
-           rm_.joinRoom(this);
+           message_=messArr[3];
+           rm_.joinRoom(message_, this);
        }
        if (cmd_.equals("leave")){
            rm_.leaveRoom(this);
@@ -115,8 +116,8 @@ public class MyRunnable implements Runnable {
         return message_;
     }
 
-    public static String makeJoinMsg(String room, String name){
-        return "{ \"type\": \"join\", \"room\": \"" + room + "\", \"user\": \"" + name + "\" }";
+    public static String makeJoinMsg(String room, String name, String message) {
+        return "{ \"type\": \"join\", \"user\": \"" + name + "\", \"room\": \"" + room + "\", \"message\": \"" + message + "\" }";
     }
     public static String makeMsgMsg(String room, String name, String message) {
         return "{ \"type\": \"message\", \"user\": \"" + name + "\", \"room\": \"" + room + "\", \"message\": \"" + message + "\" }";
