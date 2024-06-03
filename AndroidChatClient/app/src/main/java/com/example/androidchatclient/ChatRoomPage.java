@@ -34,7 +34,7 @@ public class ChatRoomPage extends AppCompatActivity  implements SensorEventListe
     private LinearLayout messageContainer;
     private LinearLayout userContainer;
     //WebSocket server URL
-    private static final String WS_URL = "ws://192.168.227.172:8080/endpoint";
+    private static final String WS_URL = "ws://192.168.50.171:8080/endpoint";
     private WebSocket ws = null;
 
     public TextView proximityText;
@@ -127,15 +127,16 @@ public class ChatRoomPage extends AppCompatActivity  implements SensorEventListe
 //        ws.sendText( "message:" + username + ":" + room + ":" + "~~~~");
         if (event.sensor.getType() == Sensor.TYPE_PROXIMITY) {
             proximityText.setText(String.valueOf(event.values[0]));
-            if (event.values[0] >= -SENSOR_SENSITIVITY && event.values[0] <= SENSOR_SENSITIVITY) {
-                //near
-                Toast.makeText(getApplicationContext(), "near", Toast.LENGTH_SHORT).show();
-                ws.sendText( "message:" + username + ":" + room + ":" + "近");
-            } else {
-                //far
-                Toast.makeText(getApplicationContext(), "far", Toast.LENGTH_SHORT).show();
-                ws.sendText( "message:" + username + ":" + room + ":" + "遠");
-            }
+            ws.sendText( "message:" + username + ":" + room + ":" + event.values[0]);
+//            if (event.values[0] >= -SENSOR_SENSITIVITY && event.values[0] <= SENSOR_SENSITIVITY) {
+//                //near
+//                Toast.makeText(getApplicationContext(), "near", Toast.LENGTH_SHORT).show();
+//                ws.sendText( "message:" + username + ":" + room + ":" + "近");
+//            } else {
+//                //far
+//                Toast.makeText(getApplicationContext(), "far", Toast.LENGTH_SHORT).show();
+//                ws.sendText( "message:" + username + ":" + room + ":" + "遠");
+//            }
         }
 
         if (event.sensor.getType() == Sensor.TYPE_LIGHT) {

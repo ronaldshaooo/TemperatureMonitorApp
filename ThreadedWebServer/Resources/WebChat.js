@@ -45,13 +45,23 @@ function handleMsgCB(e){
     if(type==="message"){
         let message = msgObj.message;
         console.log("message object: " + msgObj);
-        document.getElementById('proximityText').innerHTML = message;
+        if(message >= 3)
+            document.getElementById('proximityText').innerHTML = "遠";
+        else if(message < 3 && message >= 1.5)
+            document.getElementById('proximityText').innerHTML = "中";
+        else
+            document.getElementById('proximityText').innerHTML = "近";        
     }
 
     if (type === "join"){
         let message = msgObj.message;
         console.log("message object: " + msgObj);
-        document.getElementById('lightText').innerHTML = message;
+        if(message >= 3.5)
+            document.getElementById('lightText').innerHTML = "亮";
+        else if(message < 3.5 && message >= 1.5)
+            document.getElementById('lightText').innerHTML = "中";
+        else
+            document.getElementById('lightText').innerHTML = "暗";        
     }
 }
 
