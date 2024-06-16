@@ -50,15 +50,16 @@ function handleMsgCB(e){
         else if(message < 3 && message >= 1.5)
             document.getElementById('proximityText').innerHTML = "中";
         else
-            document.getElementById('proximityText').innerHTML = "近";        
+            document.getElementById('proximityText').innerHTML 
+        = "近";        
     }
 
     if (type === "join"){
         let message = msgObj.message;
         console.log("message object: " + msgObj);
-        if(message >= 3.5)
+        if(message >= 400)
             document.getElementById('lightText').innerHTML = "亮";
-        else if(message < 3.5 && message >= 1.5)
+        else if(message < 400 && message >= 200)
             document.getElementById('lightText').innerHTML = "中";
         else
             document.getElementById('lightText').innerHTML = "暗";        

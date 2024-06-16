@@ -34,7 +34,7 @@ public class ChatRoomPage extends AppCompatActivity  implements SensorEventListe
     private LinearLayout messageContainer;
     private LinearLayout userContainer;
     //WebSocket server URL
-    private static final String WS_URL = "ws://192.168.50.171:8080/endpoint";
+    private static final String WS_URL = "ws://192.168.109.242:8080/endpoint";
     private WebSocket ws = null;
 
     public TextView proximityText;
